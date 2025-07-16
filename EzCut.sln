@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "backend\Api\Api.csproj", "{A28F0853-CD93-D005-10F9-5F5C999F3E51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "backend\Common\Common.csproj", "{302A006F-7C38-40F3-2EAC-62B42E83B86C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A28F0853-CD93-D005-10F9-5F5C999F3E51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A28F0853-CD93-D005-10F9-5F5C999F3E51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A28F0853-CD93-D005-10F9-5F5C999F3E51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A28F0853-CD93-D005-10F9-5F5C999F3E51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

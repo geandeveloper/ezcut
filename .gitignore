@@ -1,0 +1,93 @@
+# Build results
+bin/
+obj/
+out/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio Code
+.vscode/
+.vs/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# dotnet watch / temp files
+**/Properties/launchSettings.json
+*.dbmdl
+*.bak
+*.cache/
+*.log
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+# Optional if using package restore
+*.psmdcp
+*.nuspec
+
+# Resharper / JetBrains
+_ReSharper*/
+*.DotSettings.user
+*.dotCover
+
+# Entity Framework / SQLite / Local DB
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Logs
+logs/
+*.log
+
+# Secrets
+secrets.json
+
+# Coverage
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
+*.trx
+
+# Other IDEs
+*.swp
+*.DS_Store
+*.tmp
+*.tmp.*
+
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Publish artifacts
+*.publishsettings
+publish/
+wwwroot/
+
+# Global tool cache
+dotnet-tools.json
+
+# Rider caches
+.idea/
+.idea/*
+
+# StyleCop
+StyleCopReport.xml
+
+# Local function tool settings
+local.settings.json
+
