@@ -1,4 +1,5 @@
 ﻿using Api.Barbers.Create;
+using Common.Api.Filters;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -13,6 +14,7 @@ public static class BarberApi
             .WithTags("Barbers");
 
         group.MapPost("/", CreateBarber)
+             .AddRequestContextCommandFilter<CreateBarberCommand>()
              .WithName("CreateBarber")
              .Produces<Guid>(StatusCodes.Status201Created)
              .ProducesValidationProblem();
@@ -20,8 +22,7 @@ public static class BarberApi
         return app;
     }
 
-    private static async Task<Results<Created<Guid>, BadRequest<string>>> CreateBarber(
-        CreateBarberCommand cmd, IMediator mediator, HttpContext httpContext)
+    private static async Task<Results<Created<Guid>, BadRequest<string>>> CreateBarber(CreateBarberCommand cmd, IMediator mediator)
     {
         try
         {

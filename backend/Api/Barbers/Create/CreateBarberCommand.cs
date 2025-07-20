@@ -3,5 +3,5 @@ using Common.Commands;
 
 namespace Api.Barbers.Create
 {
-    public sealed record CreateBarberCommand(Guid UserId, string Name, string Email, RequestContext Context) : ICommand<Guid>;
+    public record CreateBarberCommand(RequestContext Context, Guid UserId, string Name, string Email) : Command<Guid>(Context);
 }

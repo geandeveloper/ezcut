@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Common.Commands
 {
     public abstract class CommandHandler<TCommand, TResult>(IValidator<TCommand> validator, ILogger logger) : IRequestHandler<TCommand, TResult>
-       where TCommand : ICommand<TResult>
+       where TCommand : Command<TResult>
     {
         private readonly IValidator<TCommand> _validator = validator;
         private readonly ILogger _logger = logger;

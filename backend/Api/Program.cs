@@ -1,6 +1,5 @@
 using Api.Barbers;
 using Api.Barbers.Create;
-using Common.Api.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +12,6 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
     app.MapOpenApi();
-
-app.UseMiddleware<RequestContextMiddleware>();
 
 app.MapBarberApi();
 app.Run();
