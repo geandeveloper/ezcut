@@ -1,5 +1,4 @@
 ﻿using Common.Api;
-using MediatR;
 
 namespace Common.Events
 {

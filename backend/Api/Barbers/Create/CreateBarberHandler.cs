@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿
+using Common.Commands;
 
 namespace Api.Barbers.Create
 {
@@ -6,7 +7,7 @@ namespace Api.Barbers.Create
     {
         public Task<Guid> Handle(CreateBarberCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(Guid.Empty);
         }
     }
 }
