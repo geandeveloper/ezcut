@@ -24,6 +24,7 @@ public static class BarberApi
                 }
             })
             .AddRequestContextCommandFilter<CreateBarberCommand>()
+            .AddTelemetryFilter()
             .WithName("CreateBarber")
             .Produces<Guid>(StatusCodes.Status201Created)
             .ProducesValidationProblem();

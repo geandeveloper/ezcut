@@ -7,12 +7,13 @@ namespace Api.Barbers
         Task<Guid> Send(CreateBarberCommand cmd);
     }
 
-    internal class Mediator : IMediator
+    internal class Mediator(CreateBarberHandler handler) : IMediator
     {
-        public async Task<Guid> Send(CreateBarberCommand cmd)
+        private readonly CreateBarberHandler _handler = handler;
+
+        public Task<Guid> Send(CreateBarberCommand cmd)
         {
-            var handler = new CreateBarberHandler().Handle(cmd, CancellationToken.None);
-            return await handler;
+            return _handler.Handle(cmd, CancellationToken.None);
         }
     }
 }

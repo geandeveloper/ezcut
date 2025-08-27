@@ -1,4 +1,4 @@
-@Api_HostAddress = http://localhost:4001
+@Api_HostAddress = http://localhost:5000/api
 
 ### Create a new Barber
 POST {{Api_HostAddress}}/barbers

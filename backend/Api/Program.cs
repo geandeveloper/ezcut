@@ -1,39 +1,32 @@
 using Api.Barbers;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Logs;
-
+using Api.Barbers.Create;
+using Common.Observability;
+using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<CreateBarberHandler>();
 builder.Services.AddSingleton<IMediator, Mediator>();
 
-builder.Services
-    .AddOpenTelemetry()
-    .ConfigureResource(r => r.AddService("Barber.Api", serviceVersion: "1.0.0"))
-    .WithTracing(tracerProviderBuilder =>
+//observability
+builder.AddServiceDefaults();
+builder.Services.AddSingleton<ITelemetry, Telemetry>();
+builder.Services.AddSingleton(new ActivitySource("Api.Barbers"));
+builder.Services.AddSingleton(new Meter("Api.Barbers"));
+builder.Services.AddOpenTelemetry()
+    .WithTracing(tracer =>
     {
-        tracerProviderBuilder
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddOtlpExporter(options =>
-            {
-                options.Endpoint = new Uri("http://localhost:4317"); // Jaeger/OTLP
-            });
+        tracer.AddSource("Api.Barbers");
     })
-    .WithMetrics(meterProviderBuilder =>
+    .WithMetrics(metrics =>
     {
-        meterProviderBuilder
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddOtlpExporter(options =>
-            {
-                options.Endpoint = new Uri("http://localhost:4317"); // Jaeger/OTLP
-            });
+        metrics.AddMeter("Api.Barbers");
     });
 
 var app = builder.Build();
 
+app.MapDefaultEndpoints();
 app.MapBarberApi();
+
 app.Run();

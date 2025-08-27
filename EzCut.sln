@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "backend\Api\Api.cspr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "backend\Common\Common.csproj", "{302A006F-7C38-40F3-2EAC-62B42E83B86C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aspire", "backend\Aspire\Aspire.csproj", "{A689A615-18EA-4B6A-8421-8150B6C74151}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceDefaults", "backend\ServiceDefaults\ServiceDefaults.csproj", "{A49951BD-D127-4B9B-8AC8-6936FC636CFE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +25,19 @@ Global
 		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{302A006F-7C38-40F3-2EAC-62B42E83B86C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A689A615-18EA-4B6A-8421-8150B6C74151}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A689A615-18EA-4B6A-8421-8150B6C74151}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A689A615-18EA-4B6A-8421-8150B6C74151}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A689A615-18EA-4B6A-8421-8150B6C74151}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49951BD-D127-4B9B-8AC8-6936FC636CFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49951BD-D127-4B9B-8AC8-6936FC636CFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49951BD-D127-4B9B-8AC8-6936FC636CFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A49951BD-D127-4B9B-8AC8-6936FC636CFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41CDBBD6-8B7B-4727-84F0-0D3389E259E4}
 	EndGlobalSection
 EndGlobal
