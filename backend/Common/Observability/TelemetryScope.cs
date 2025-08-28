@@ -1,21 +1,18 @@
 ﻿using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using System.Linq.Expressions;
 
 namespace Common.Observability
 {
-    public class TelemetryScope : ITelemetryScope
+    public class TelemetryScope(string name, ILogger logger, ActivitySource activitySource, Meter meter) : ITelemetryScope, IDisposable
     {
-        private readonly ILogger _logger;
-        private readonly Activity? _activity;
-        private readonly Meter _meter;
+        private readonly Activity? _activity = activitySource?.StartActivity(name);
+        private readonly ILogger _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        private readonly Meter _meter = meter ?? throw new ArgumentNullException(nameof(meter));
 
-        public TelemetryScope(string name, ILogger logger, ActivitySource activitySource, Meter meter)
-        {
-            _logger = logger;
-            _meter = meter;
-            _activity = activitySource.StartActivity(name);
-        }
+        private static readonly ConcurrentDictionary<string, Counter<double>> _counters = new();
 
         public ITelemetryScope Log(string message, params object[] args)
         {
@@ -23,18 +20,27 @@ namespace Common.Observability
             return this;
         }
 
-        public ITelemetryScope Metric(string metricName, double value, (string, object?)[] tags)
+        public ITelemetryScope Metric<TMetrics>(Expression<Func<TMetrics, MetricDefinition>> metric, double value, params (string key, object? value)[] tags
+        ) where TMetrics : new()
         {
-            var kvTags = tags.Select(t => new KeyValuePair<string, object?>(t.Item1, t.Item2)).ToArray();
-            var counter = _meter.CreateCounter<double>(metricName);
-            
+            var metrics = new TMetrics();
+            var metricDef = metric.Compile().Invoke(metrics);
+
+            var counter = _counters.GetOrAdd(metricDef.Name,
+                name => _meter.CreateCounter<double>(name));
+
+            var kvTags = tags
+                .Select(t => new KeyValuePair<string, object?>(t.key, t.value))
+                .ToArray();
+
             counter.Add(value, kvTags);
+
             return this;
         }
 
         public ITelemetryScope Fail(Exception ex)
         {
-            _logger.LogError(ex, "Erro na operação {Operation}", _activity?.DisplayName);
+            _logger.LogError(ex, "Operation Error: {Operation}", _activity?.DisplayName);
             _activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
             return this;
         }

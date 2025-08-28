@@ -1,40 +1,41 @@
-﻿using Api.Barbers.Create;
+﻿using Api.Barbers;
 using Common.Commands;
 using Common.Observability;
 
-public class CreateBarberHandler : IRequestHandler<CreateBarberCommand, Guid>
+namespace Api.Barbers.Create
 {
-    private static readonly Dictionary<Guid, CreateBarberCommand> _barbers = new();
-
-    private readonly ITelemetry _telemetry;
-
-    public CreateBarberHandler(ITelemetry telemetry)
+    public class CreateBarberHandler(ITelemetry telemetry) : IRequestHandler<CreateBarberCommand, Guid>
     {
-        _telemetry = telemetry;
-    }
+        private static readonly Dictionary<Guid, CreateBarberCommand> _barbers = new();
 
-    public Task<Guid> Handle(CreateBarberCommand request, CancellationToken cancellationToken)
-    {
-        using var scope = _telemetry.Begin("CreateBarber")
-            .Log("Iniciando criação do barber {Nome}", request.Name)
-            .Metric("barbers_criados_tentativa", 1);
-
-        try
+        public Task<Guid> Handle(CreateBarberCommand request, CancellationToken cancellationToken)
         {
-            var id = Guid.NewGuid();
-            _barbers[id] = request;
+            var metrics = new BarberMetrics();
 
-            scope.Log("Barber {Id} criado com sucesso", id)
-                 .Metric("barbers_criados_total", 1, ("status", "sucesso"));
+            using var scope = telemetry.Begin("CreateBarber")
+                .Log("Starting barber creation: {Name}", request.Name)
+                .Metric<BarberMetrics>(m => m.CreatedAttempt, 1);
 
-            return Task.FromResult(id);
-        }
-        catch (Exception ex)
-        {
-            scope.Fail(ex)
-                 .Metric("barbers_criados_total", 1, ("status", "falha"));
+            try
+            {
+                if ((new Random().Next(30)) % 2 == 0)
+                    throw new Exception("without lucky");
 
-            throw;
+                var id = Guid.NewGuid();
+                _barbers[id] = request;
+
+                scope.Log("Barber {Id} successfully created", id)
+                     .Metric<BarberMetrics>(m => m.Success, 1);
+
+                return Task.FromResult(id);
+            }
+            catch (Exception ex)
+            {
+                scope.Fail(ex)
+                     .Metric<BarberMetrics>(m => m.Failure, 1, ("exception", ex.GetType().Name));
+
+                throw;
+            }
         }
     }
 }
